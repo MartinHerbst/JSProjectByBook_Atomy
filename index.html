@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Atomy - JavaScript Project</title>
+		<!--Icon-->
+		<link rel="icon" type="image/png" href="images/atomIcon.png"/>
+		<!--Bootstrap import-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+		
+		<!--CSS-->
+        <link rel="stylesheet" href="style.css">
+	</head>
+
+	<body class="mx-auto">
+		<!-- spustit logiku -->
+		<script src="xy.js"></script>			<!--Coorddinates-->
+		<script src="game.js"></script>			<!--object Game for game control-->
+		<script src="draw.js"></script>			<!--object Draw for rendering-->
+		<script src="player.js"></script>		<!--object Player for user input-->
+		<script src="player.human.js"></script>
+		<script src="player.ai.js"></script>
+		<script src="board.js"></script>		<!--object Board as state of the playing board-->
+
+		<div id="game-wrap" class="container">
+			<div class="row mt-4">
+				<!--CANVAS-->
+				<div class="col ms-5 mb-2">
+					<div id="game" class="">
+
+					</div>
+				</div>
+				<!--BUTTONS-->
+				<div id="menu" class="col ms-4">
+					
+				<div class="mb-3 row gap-1">
+					<button id="start" class="btn btn-light btn-outline-dark btn-lg rounded col" onclick="buttonClick.play()">Start</button>
+					<button id="load" class="btn btn-light btn-outline-dark btn-lg rounded col" onclick="buttonClick.play()">Load</button>
+						
+					
+
+					<script> // players and start of logic
+						const putAtom = new Audio();
+						putAtom.src = "./sound/putAtom.mp3";
+
+						const explode = new Audio();
+						explode.src = "./sound/explode.mp3";
+
+						const buttonClick = new Audio();
+						buttonClick.src = "./sound/buttonClick.mp3";
+
+						var start = document.querySelector("#start");
+						var load = document.querySelector("#load");
+						var game = new Game();
+
+						if (!game.canContinue()) { load.disabled = true; }
+
+						start.addEventListener("click", function() {
+							load.disabled = true;
+							start.disabled = true;
+							
+							
+							
+							
+							var nameOne = prompt("Player ONE name:");
+							if (nameOne == null) {
+								location.reload();
+								return;
+							}
+							while (nameOne == "") {
+								nameOne = prompt("Please ENTER player ONE name:");
+							}
+							var playAI = 0;
+							if (confirm("Do you want to play agains AI?")) {
+								var playAI = 1;
+							} else {
+								var nameTwo = prompt("Player TWO name:");
+								if (nameTwo == null) {
+								location.reload();
+								return;
+							}
+								while (nameTwo == "") {
+									nameTwo = prompt("Please ENTER player TWO name:");
+								}
+							}
+
+							if (playAI == 1) {
+								game.start([
+									new Player.Human(nameOne, "blue"),
+									new Player.AI("Bob the bot", "red"),
+								]);
+							} else {
+								game.start([
+									new Player.Human(nameOne, "blue"),
+									new Player.Human(nameTwo, "red"),
+								]);
+							}
+							
+						});
+						load.addEventListener("click", function() {
+							load.disabled = true;
+							game.load();
+
+						});
+
+						var ableToStart = function() {
+							start.disabled = false;
+						}
+					</script>
+				</div>
+				<!--SCORE-->
+					<div id="menu-players" class="bg-dark rounded p-2 mb-3">
+						
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

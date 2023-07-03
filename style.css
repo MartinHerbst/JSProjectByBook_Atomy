@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: rgb(180,197,214);
+    background: linear-gradient(90deg, rgba(180,197,214,1) 29%, rgba(125,147,168,1) 100%);
+}
+td {
+    border: 1px solid black;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    color: blue;
+}
